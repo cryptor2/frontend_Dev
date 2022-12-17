@@ -1,3 +1,6 @@
+*{
+    box-sizing: border-box;
+}
 body{
     margin: 0px;
     
@@ -62,5 +65,21 @@ tr:last-child td {
 }
 
 .dynamic-text-color{
-    color: royalblue
+    color: royalblue;
+}
+
+form#contact {
+    max-width: 400px;
+    margin: auto;
+    padding: 16px;
+    border: 1px solid;
+    border-radius: 16px;
+}
+
+#contact label{
+    font-weight: bold;
+    display: block;
+}
+#contact input, #contact textarea, #contact button{
+    width: 100%;
 }

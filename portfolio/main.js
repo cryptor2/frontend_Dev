@@ -31,7 +31,6 @@ function clearLetters(){
         for(let index = 0; index < letterIndex; index++){
             updatedPhrase += phrases[phraseIndex].charAt(index)
         }
-        console.log(updatedPhrase)
     dynamicContent.textContent = updatedPhrase;
     letterIndex -=1;
     setTimeout(clearLetters,erasingSpeed);
