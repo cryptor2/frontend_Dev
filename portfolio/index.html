@@ -8,7 +8,28 @@
     <title>Portfolio</title>
 </head>
 <body>
-    <div class="container">
+    <section class="menu">
+        <button id="close-menu">&times;</button>
+        <nav>
+            <ul>
+                <li><a href="#about-me">About Me</a></li>
+                <li><a href="#qualifications">Qualifications</a></li>
+                <li><a href="#hobbies">Hobbies</a></li>
+                <li><a href="#technologies">Technologies</a></li>
+                <li><a href="#contact-me">Contact Me</a></li>
+            </ul>
+        </nav>
+    </section>
+    <header>
+        <nav class="default-nav">
+            <a href="#about-me">About Me</a><a href="#qualifications">Qualifications</a><a href="#hobbies">Hobbies</a><a href="#technologies">Technologies</a><a href="#contact-me">Contact Me</a>
+        </nav>
+        <nav class="mobile-nav" id="mobile-nav">
+            <button id="menu-button">Menu</menu></button>
+        </nav>
+    </header>
+    <main>
+    <article class="container">
         <div class="intro">
             <img class="profile-img" src="./images/newProfile.jpg" alt="">
             <h1>I'm Prince</h1>
@@ -26,28 +47,28 @@
             </p>
         </div>
     
-    </div>
-    <div class="content">
-        <div class="about-me">
+    </article>
+    <article class="content">
+        <section class="about-me" id="about-me">
             <h2>About Me</h2>
             <p>A Frontend developer by profession that wants to build awesome website.</p>
             <p>In 2021 I started web development as a hobby. And now i am buliding aswesome clones.</p>
-            </div>
-        <div>
+        </section>
+        <section id="qualifications">
             <h2>Qualifications</h2>
             <ol>
                 <li>BE CSE(Persuing)</li>
                 <li>Diploma in Electrical Engineering</li>
             </ol>
-        </div>
-        <div>
+        </section>
+        <section id="hobbies">
             <h2>Hobbies</h2>
             <ol>
                 <li>Coding</li>
                 <li>Watching movies </li>
             </ol>
-        </div>
-        <div>
+        </section>
+        <section id="technologies">
             <h2>Technologies</h2>
             <table>
                 <tr>
@@ -62,8 +83,8 @@
                 </tr>
     
             </table>
-        </div>
-        <div class="contact-me">
+        </section>
+        <section class="contact-me" id="contact-me">
             <form name="contact" id="contact" method="post" data-netlify="true">
                 <h1>Contact Me</h1>
                 <div>
@@ -81,9 +102,14 @@
                 <button type="submit">Send</button>
             </form>
 
-        </div>
-    </div>
+        </section>
+    </article>
+</main>
+<footer>
+    Made by Prince Singh
+</footer>
 
 <script src="./main.js"></script>
+<script src="./menu.js"></script>
 </body>
 </html>
