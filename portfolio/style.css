@@ -11,7 +11,11 @@
     --text-color: hsl(240deg 95% 8%);
     --intro-color: hsl(0deg 0% 85%);
     --secondary-color: hsl(225deg 85% 57%);
-    --spacing-regular: 1rem;
+    --shadow-color: hsl(225 10% 83%);
+    --shadow-color-dark: hsl(225 10% 63%);
+    --spacing-regular: 16px;
+    --spacing-small: calc(var(--spacing-regular)/2);
+
     scroll-behavior: smooth;
 }
 body{
@@ -21,27 +25,35 @@ body{
     color: var(--text-color);
 }
 
-header{
-    padding: 16px;
-}
-
-#technologies{
+#technologies .container{
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: var(--spacing-regular);
 }
 
+
 .card{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     border: 1px solid white;
-    box-shadow: 3px 3px 8px 5px var(--secondary-color);
+    box-shadow: 3px 3px 6px 5px var(--shadow-color);
+    transition: transform 0.4s ease-in, box-shadow 0.4s ease-in-out;
+}
+
+.card:hover{
+    box-shadow: 3px 3px 8px 9px var(--shadow-color-dark);
+    transform: translateY(calc(-1 * var(--spacing-small)));
 }
  .card ul{
     list-style: none;
     padding: 0;
-    text-align: center;
  }
-.card h1{
+.card header h1{
     text-align: center;
+    /* margin: 0; */
+    font-size: var(--font-size-regular);
 }
 footer{
     margin-top: 16px;
@@ -50,14 +62,13 @@ footer{
     border-top: 4px solid;
 }
 
-nav a {
+
+header nav > a{
+    margin-right: 16px;
     text-decoration: none;
     color: inherit;
     font-size: var(--font-size-regular);
-}
-header nav > a{
-    margin-right: 16px;
-    color: white;
+    
 }
 header nav > a:last-child{
     margin-right: 0px;
@@ -72,10 +83,10 @@ nav > a:visited{
     color: inherit;
 }
 
-header{
+.header{
     position: sticky;
     background: var(--background-color);
-    
+    padding: 16px;
     top: 0;
     z-index: 1;
 }
@@ -137,6 +148,9 @@ tr:last-child td {
     color: royalblue;
 }
 
+.dynamic-p{
+    font-size: var(--font-size-large);
+}
 form#contact {
     max-width: 400px;
     margin: auto;
@@ -167,6 +181,11 @@ form#contact {
     background: white;
     margin-left: auto;
 }
+
+section{
+    scroll-margin-top:calc(100px - (2 * var(--spacing-regular)));
+}
+
 .mobile-nav,
 section.menu{
     display: none;
@@ -232,4 +251,10 @@ section.menu{
     --text-color: hsl(240deg 95% 100%);
     --intro-color: hsl(0deg 0% 18%);
     }
+    /* .card{
+        box-shadow: 3px 3px 6px 2px var(--shadow-color-dark);
+    }
+    .card:hover{
+        box-shadow: 3px 3px 8px 7px var(--shadow-color-dark);
+    } */
 }

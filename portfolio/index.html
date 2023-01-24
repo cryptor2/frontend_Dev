@@ -20,7 +20,7 @@
             </ul>
         </nav>
     </section>
-    <header>
+    <header class="header">
         <nav class="default-nav">
             <a href="#about-me">About Me</a><a href="#qualifications">Qualifications</a><a href="#hobbies">Hobbies</a><a href="#technologies">Technologies</a><a href="#contact-me">Contact Me</a>
         </nav>
@@ -33,7 +33,7 @@
         <div class="intro">
             <img class="profile-img" src="./images/profile.png" alt="">
             <h1>I'm Prince</h1>
-            <p>I am a <span id="dynamic-text" class="dynamic-text-color"></span></p>
+            <p class="dynamic-p">I am a <span id="dynamic-text" class="dynamic-text-color"></span></p>
             <p class="social-links">
                 <a class="social-link" href="https://www.instagram.com/prince8.0" target="_blank">
                     <img class="logo-img" src="./images/instagram.png" alt="instagram-logo">
@@ -68,35 +68,38 @@
                 <li>Watching movies </li>
             </ol>
         </section>
-
-        <h2>Technologies</h2>
         <section id="technologies">
-            <section class="card">
-                <header>
-                    <h1>Frontend</h1>
-                </header>
-                <ul>
-                    <li>HTML</li>
-                </ul>
+            <h2 >Technologies</h2>
+            <section  class="container">
+                <section class="card">
+                    <header>
+                        <h1>Frontend</h1>
+                    </header>
+                    <ul>
+                        <li>HTML</li>
+                    </ul>
+                </section>
+                <section class="card">
+                    <header>
+                        <h1>Backend</h1>
+                    </header>
+                    <ul>
+                        <li>NodeJS</li>
+                    </ul>
+                </section>
+                <section class="card">
+                    <header>
+                        <h1>Database</h1>
+                    </header>
+                    <ul>
+                        <li>MySQL</li>
+                    </ul>
+                </section>
+    
             </section>
-            <section class="card">
-                <header>
-                    <h1>Backend</h1>
-                </header>
-                <ul>
-                    <li>NodeJS</li>
-                </ul>
-            </section>
-            <section class="card">
-                <header>
-                    <h1>Database</h1>
-                </header>
-                <ul>
-                    <li>MySQL</li>
-                </ul>
-            </section>
-
         </section>
+        
+        
         <section class="contact-me" id="contact-me">
             <form name="contact" id="contact" method="post" data-netlify="true">
                 <h1>Contact Me</h1>
