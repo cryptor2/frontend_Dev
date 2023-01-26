@@ -1,5 +1,7 @@
 const API_KEY = "c9ffbd50364f4cc2a2ec215ccea659d6";
 
+const DAYS_OF_THE_WEEK = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"];
+
 const getCurrentWeatherData = async () => {
   const city = "pune";
   const response = await fetch(
@@ -57,7 +59,6 @@ const loadCurrentForecast = ({
 // hourly forecast
 
 const loadHourlyForecast = (hourlyForecast) => {
-  console.log(hourlyForecast);
   let dataFor12Hours = hourlyForecast.slice(1, 13);
   const hourlyContainer = document.querySelector(".hourly-container");
   let innerHTMLString = ``;
@@ -82,6 +83,25 @@ const loadHumidity = ({ main: { humidity } }) => {
   let container = document.querySelector("#humidity");
   container.querySelector(".humidity-value").textContent = `${humidity} %`;
 };
+
+const claculateDayWiseForecast = (hourlyForecast) => {
+  let dayWiseForecast = new Map();
+  for (let forecast of hourlyForecast) {
+    const [date] = forecast.dt_txt.split(" ");
+    const dayOfTheWeek = DAYS_OF_THE_WEEK[new Date(date).getDay()];
+    if (dayWiseForecast.has(dayOfTheWeek)) {
+      let forecastForTheDay = dayWiseForecast.get(DAYS_OF_THE_WEEK);
+      forecastForTheDay.push(forecast);
+      dayWiseForecast.set(dayOfTheWeek, forecastForTheDay);
+    } else {
+      dayWiseForecast.set(dayOfTheWeek, [forecast]);
+    }
+  }
+};
+
+const loadFiveDayForecast = (hourlyForecast) => {
+  console.log(hourlyForecast);
+};
 document.addEventListener("DOMContentLoaded", async () => {
   const currentWeather = await getCurrentWeatherData();
   loadCurrentForecast(currentWeather);
@@ -89,4 +109,5 @@ document.addEventListener("DOMContentLoaded", async () => {
   loadHourlyForecast(hourlyForecast);
   loadFeelsLike(currentWeather);
   loadHumidity(currentWeather);
+  loadFiveDayForecast(hourlyForecast);
 });
