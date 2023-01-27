@@ -3,7 +3,7 @@ const API_KEY = "c9ffbd50364f4cc2a2ec215ccea659d6";
 const DAYS_OF_THE_WEEK = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"];
 
 const getCurrentWeatherData = async () => {
-  const city = "pune";
+  const city = "shimla";
   const response = await fetch(
     `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=metric`
   );
@@ -58,14 +58,28 @@ const loadCurrentForecast = ({
 
 // hourly forecast
 
-const loadHourlyForecast = (hourlyForecast) => {
-  let dataFor12Hours = hourlyForecast.slice(1, 13);
+const loadHourlyForecast = (
+  { main: { temp: tempNow }, weather: [{ icon: iconNow }] },
+  hourlyForecast
+) => {
+  console.log(hourlyForecast);
+  const timeFormatter = Intl.DateTimeFormat("en", {
+    hour12: true,
+    hour: "numaric",
+    hour: "2-digit",
+  });
+  let dataFor12Hours = hourlyForecast.slice(2, 14);
   const hourlyContainer = document.querySelector(".hourly-container");
-  let innerHTMLString = ``;
+  let innerHTMLString = `         
+            <article>
+            <h3 class="time">Now</h3>
+            <img class="icon" src="${createIconUrl(iconNow)}" alt="" />icon
+            <p class="hourly-temp">${formatTemperature(tempNow)}</p>
+          </article>`;
   for (let { temp, icon, dt_txt } of dataFor12Hours) {
     innerHTMLString += `         
             <article>
-            <h3 class="time">${dt_txt.split(" ")[1]}</h3>
+            <h3 class="time">${timeFormatter.format(new Date(dt_txt))}</h3>
             <img class="icon" src="${createIconUrl(icon)}" alt="" />icon
             <p class="hourly-temp">${formatTemperature(temp)}</p>
           </article>`;
@@ -90,24 +104,52 @@ const claculateDayWiseForecast = (hourlyForecast) => {
     const [date] = forecast.dt_txt.split(" ");
     const dayOfTheWeek = DAYS_OF_THE_WEEK[new Date(date).getDay()];
     if (dayWiseForecast.has(dayOfTheWeek)) {
-      let forecastForTheDay = dayWiseForecast.get(DAYS_OF_THE_WEEK);
+      let forecastForTheDay = dayWiseForecast.get(dayOfTheWeek);
       forecastForTheDay.push(forecast);
       dayWiseForecast.set(dayOfTheWeek, forecastForTheDay);
     } else {
       dayWiseForecast.set(dayOfTheWeek, [forecast]);
     }
   }
+  for (let [key, value] of dayWiseForecast) {
+    let temp_min = Math.min(...Array.from(value, (val) => val.temp_min));
+    let temp_max = Math.max(...Array.from(value, (val) => val.temp_max));
+
+    dayWiseForecast.set(key, {
+      temp_min,
+      temp_max,
+      icon: value.find((v) => v.icon).icon,
+    });
+  }
+  return dayWiseForecast;
 };
 
 const loadFiveDayForecast = (hourlyForecast) => {
-  console.log(hourlyForecast);
+  //   console.log(hourlyForecast);
+  const dayWiseForecast = claculateDayWiseForecast(hourlyForecast);
+  const container = document.querySelector(".five-day-forecast-container");
+  let dayWiseInfo = "";
+  Array.from(dayWiseForecast).map(
+    ([day, { temp_max, temp_min, icon }], index) => {
+      if (index < 5) {
+        dayWiseInfo += `
+        <article class="day-wise-forecast">
+          <h3 class="day">${index === 0 ? "today" : day}</h3>
+          <img src="${createIconUrl(icon)}" alt="" />
+          <p class="min-temp">${formatTemperature(temp_min)}</p>
+          <p class="max-temp">${formatTemperature(temp_max)}</p>
+        </article>`;
+      }
+    }
+  );
+  container.innerHTML = dayWiseInfo;
 };
 document.addEventListener("DOMContentLoaded", async () => {
   const currentWeather = await getCurrentWeatherData();
   loadCurrentForecast(currentWeather);
   const hourlyForecast = await getHourlyForecast(currentWeather);
-  loadHourlyForecast(hourlyForecast);
+  loadHourlyForecast(currentWeather, hourlyForecast);
+  loadFiveDayForecast(hourlyForecast);
   loadFeelsLike(currentWeather);
   loadHumidity(currentWeather);
-  loadFiveDayForecast(hourlyForecast);
 });
