@@ -165,6 +165,16 @@ const loadFiveDayForecast = (hourlyForecast) => {
   container.innerHTML = dayWiseInfo;
 };
 
+loadForecastUsingGeoLocation = () => {
+  navigator.geolocation.getCurrentPosition(
+    ({ coords }) => {
+      const { latitude: lat, longitude: lon } = coords;
+      selectedCity = { lat, lon };
+      loadData();
+    },
+    (error) => console.log(error)
+  );
+};
 function debounce(func) {
   let timer;
   return (...args) => {
@@ -209,6 +219,7 @@ const handleCitySelection = (event) => {
 };
 
 document.addEventListener("DOMContentLoaded", async () => {
+  loadForecastUsingGeoLocation();
   const searchInput = document.querySelector("#search");
   searchInput.addEventListener("input", debounceSearch);
   searchInput.addEventListener("change", handleCitySelection);
